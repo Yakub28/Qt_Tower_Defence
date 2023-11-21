@@ -1,11 +1,15 @@
 #include "Game.h"
-#include <QGraphicsScene>
 #include "Tower.h"
+#include "Bullet.h"
+
+#include <QGraphicsScene>
 #include <memory>
+
 Game::Game()
 {
     //create a scene
     scene=new QGraphicsScene(this);
+    scene->setSceneRect(0,0,800,600);
 
     //set the scene
     setScene(scene);
@@ -13,8 +17,17 @@ Game::Game()
     //create a tower
     Tower* t=new Tower();
 
-
     scene->addItem(t);
 
     setFixedSize(800,600);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+}
+
+void Game::mousePressEvent(QMouseEvent *event)
+{
+    Bullet* bullet=new Bullet();
+    bullet->setPos(event->pos());
+    bullet->setRotation(40);
+    scene->addItem(bullet);
 }
