@@ -1,10 +1,17 @@
 #include "Tower.h"
+#include "Bullet.h"
+#include "Game.h"
+
 #include <QPixmap>
 #include <QVector>
 #include <QPointF>
 #include <QPolygonF>
+#include <QLine>
+#include <QTimer>
 
-Tower::Tower(QGraphicsItem *parent)
+extern Game* game;
+
+Tower::Tower(QGraphicsItem *parent):QObject(),QGraphicsPixmapItem(parent)
 {
     setPixmap(QPixmap(":/images/resources/i1.png"));
 
@@ -30,4 +37,22 @@ Tower::Tower(QGraphicsItem *parent)
     QLineF ln(poly_center,tower_center);
     attack_area->setPos(x()+ln.dx(),y()+ln.dy());
 
+    //connect a timer to attack_target
+    QTimer *timer=new QTimer();
+    connect(timer,SIGNAL(timeout()),this,SLOT(attack_target()));
+    timer->start(1000);
+
+    attack_dest=QPointF(800,0);
+}
+
+void Tower::attack_target()
+{
+    Bullet* bullet=new Bullet();
+    bullet->setPos(x()+30,y()+39.5);
+
+    QLineF ln(QPointF(x()+30,y()+39.5),attack_dest);
+    int angle=-1*ln.angle();
+
+    bullet->setRotation(angle);
+    game->scene->addItem(bullet);
 }
