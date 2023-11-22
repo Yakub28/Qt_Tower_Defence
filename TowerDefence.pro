@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     Bullet.cpp \
+    Enemy.cpp \
     Game.cpp \
     Tower.cpp \
     main.cpp
 
 HEADERS += \
     Bullet.h \
+    Enemy.h \
     Game.h \
     Tower.h
 
