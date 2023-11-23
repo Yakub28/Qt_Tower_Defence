@@ -9,6 +9,7 @@
 #include <QPolygonF>
 #include <QLine>
 #include <QTimer>
+#include <QPen>
 
 extern Game* game;
 
@@ -29,6 +30,7 @@ Tower::Tower(QGraphicsItem *parent):QObject(),QGraphicsPixmapItem(parent)
     }
 
     attack_area=new QGraphicsPolygonItem(QPolygonF(points),this);
+    attack_area->setPen(QPen(Qt::DotLine));
 
     //move the polygon
     QPointF poly_center(1.5,1.5);
@@ -48,7 +50,7 @@ Tower::Tower(QGraphicsItem *parent):QObject(),QGraphicsPixmapItem(parent)
 
 double Tower::distanceTo(QGraphicsItem *item)
 {
-    QLineF ln(pos(),item->pos());
+    QLineF ln(this->pos(),item->pos());
     return ln.length();
 }
 
@@ -67,17 +69,16 @@ void Tower::fire()
 void Tower::aquire_target(){
     QList<QGraphicsItem *> colliding_items = attack_area->collidingItems();
 
-    if (colliding_items.size() == 1){
-        has_target = false;
-        return;
-    }
+    has_target = false;
 
     double closest_dist = 300;
-    QPointF closest_pt = QPointF(0,0);
-    for (size_t i = 0, n = colliding_items.size(); i < n; i++){
+    QPointF closest_pt(0,0);
+    for (size_t i = 0, n = colliding_items.size(); i < n; ++i){
+
         Enemy * enemy = dynamic_cast<Enemy *>(colliding_items[i]);
+
         if (enemy){
-            double this_dist = distanceTo(enemy);
+            double this_dist = distanceTo(colliding_items[i]);
             if (this_dist < closest_dist){
                 closest_dist = this_dist;
                 closest_pt = colliding_items[i]->pos();
@@ -86,6 +87,8 @@ void Tower::aquire_target(){
         }
     }
 
-    attack_dest = closest_pt;
-    fire();
+    if (has_target){
+        attack_dest = closest_pt;
+        fire();
+    }
 }
