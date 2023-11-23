@@ -33,13 +33,12 @@ void Enemy::move_forward()
     //if close to dest, rotate to next dest
     QLineF ln(pos(),dest);
     if(ln.length()<5){
-//        if(points.size()<point_index)
-//        {
-            point_index++;
-            dest=points[point_index];
-            rotateToPoint(dest);
-//        }
-        //qDebug()<<"Final dest reached";
+        point_index++;
+        if(point_index>=points.size()){
+            return;
+        }
+        dest=points[point_index];
+        rotateToPoint(dest);
     }
 
     int STEP_SIZE=5;
