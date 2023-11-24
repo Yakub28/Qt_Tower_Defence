@@ -6,8 +6,17 @@
 
 class Bullet:public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
+
+    double maxRange;
+    double distanceTraveled;
 public:
     Bullet(QGraphicsItem* parent=0);
+    double getDistanceTraveled() const;
+    void setDistanceTraveled(double newDistanceTraveled);
+
+    double getMaxRange() const;
+    void setMaxRange(double newMaxRange);
+
 public slots:
     void move();
 };

@@ -3,5 +3,9 @@
         <file>resources/i1.png</file>
         <file>resources/i2.png</file>
         <file>resources/i3.png</file>
+        <file>resources/i4.png</file>
+        <file>resources/i5.png</file>
+        <file>resources/i6.png</file>
+        <file>resources/i7.png</file>
     </qresource>
 </RCC>
