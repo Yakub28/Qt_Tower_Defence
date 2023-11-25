@@ -24,6 +24,11 @@ void BrownTower::fire(){
     game->scene->addItem(bullet);
 }
 
+BrownTower::~BrownTower()
+{
+
+}
+
 void BrownTower::aquire_target(){
     Tower::aquire_target();
 }

@@ -6,6 +6,10 @@
 #include "BuildBrownTowerIcon.h"
 #include "BuildGreenTowerIcon.h"
 #include "BuildRedTowerIcon.h"
+#include <QTimer>
+#include <QGraphicsLineItem>
+#include <QPen>
+#include <QLineF>
 
 Game::Game(): QGraphicsView(){
     // create a scene
@@ -26,8 +30,14 @@ Game::Game(): QGraphicsView(){
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // create enemy
-    Enemy * enemy = new Enemy();
-    scene->addItem(enemy);
+    spawnTimer = new QTimer(this);
+    enemiesSpawned = 0;
+    maxNumberOfEnemies = 0;
+    pointsToFollow << QPointF(800,0) << QPointF(450,450) << QPointF(0,600);
+
+    createEnemies(5);
+
+    createRoad();
 
     // test code
     BuildBrownTowerIcon * bt = new BuildBrownTowerIcon();
@@ -82,4 +92,38 @@ void Game::mousePressEvent(QMouseEvent *event){
         QGraphicsView::mousePressEvent(event);
     }
 
+}
+
+void Game::createEnemies(int numberOfEnemies){
+    enemiesSpawned = 0;
+    maxNumberOfEnemies = numberOfEnemies;
+    connect(spawnTimer,SIGNAL(timeout()),this,SLOT(spawnEnemy()));
+    spawnTimer->start(1000);
+}
+
+void Game::createRoad()
+{
+    for(size_t i=0, n=pointsToFollow.size()-1;i<n;i++){
+        QLineF line(pointsToFollow[i],pointsToFollow[i+1]);
+        QGraphicsLineItem *lineItem=new QGraphicsLineItem(line);
+
+        QPen pen;
+        pen.setWidth(15);
+        pen.setColor(Qt::darkGray);
+
+        lineItem->setPen(pen);
+        scene->addItem(lineItem);
+    }
+}
+
+void Game::spawnEnemy(){
+    // spawn an enemy
+    Enemy * enemy = new Enemy(pointsToFollow);
+    enemy->setPos(pointsToFollow[0]);
+    scene->addItem(enemy);
+    enemiesSpawned += 1;
+
+    if (enemiesSpawned >= maxNumberOfEnemies){
+        spawnTimer->disconnect();
+    }
 }

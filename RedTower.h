@@ -8,6 +8,7 @@ class RedTower: public Tower{
 public:
     RedTower(QGraphicsItem * parent=0);
     void fire();
+    virtual ~RedTower();
 public slots:
     void aquire_target();
 };

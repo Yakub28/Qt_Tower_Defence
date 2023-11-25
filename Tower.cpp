@@ -60,6 +60,11 @@ void Tower::fire(){
     game->scene->addItem(bullet);
 }
 
+Tower::~Tower()
+{
+
+}
+
 void Tower::aquire_target(){
     // get a list of all enemies that collide with attack_area, find the closest one
     // and set it's position as the attack_dest

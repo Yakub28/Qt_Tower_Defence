@@ -13,6 +13,7 @@ public:
     Tower(QGraphicsItem * parent=0);
     double distanceTo(QGraphicsItem * item);
     virtual void fire();
+    virtual ~Tower();
 public slots:
     void aquire_target();
 protected:

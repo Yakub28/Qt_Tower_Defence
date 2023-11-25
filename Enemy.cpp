@@ -7,11 +7,11 @@
 #include <qmath.h>
 #include <QDebug>
 
-Enemy::Enemy(QGraphicsItem *parent)
+Enemy::Enemy(QList<QPointF> pointsToFollow, QGraphicsItem *parent)
 {
     setPixmap(QPixmap(":/images/resources/i3.png"));
 
-    points<<QPointF(200,200)<<QPointF(400,200);//move  down right than right
+    points=pointsToFollow;
     point_index=0;
     dest = points[0];
     rotateToPoint(dest);

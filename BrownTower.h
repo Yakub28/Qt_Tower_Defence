@@ -9,6 +9,7 @@ class BrownTower:public Tower{
 public:
     BrownTower(QGraphicsItem *parent=0);
     void fire();
+    virtual ~BrownTower();
 public slots:
     void aquire_target();
 };

@@ -24,6 +24,11 @@ void RedTower::fire(){
     game->scene->addItem(bullet);
 }
 
+RedTower::~RedTower()
+{
+
+}
+
 void RedTower::aquire_target(){
     Tower::aquire_target();
 }

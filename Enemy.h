@@ -13,7 +13,7 @@ class Enemy:public QObject, public QGraphicsPixmapItem{
     QPointF dest;
     int point_index;
 public:
-    Enemy(QGraphicsItem *parent=0);
+    Enemy(QList<QPointF>pointsToFollow,QGraphicsItem *parent=0);
     void rotateToPoint(QPointF p);
 public slots:
     void move_forward();

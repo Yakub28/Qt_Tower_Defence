@@ -39,6 +39,11 @@ void GreenTower::fire(){
     game->scene->addItem(bullet3);
 }
 
+GreenTower::~GreenTower()
+{
+
+}
+
 void GreenTower::aquire_target(){
     Tower::aquire_target();
 }
